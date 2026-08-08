@@ -1,10 +1,16 @@
+import warnings
+
 import numpy as np
+
 
 class SimpleRidgeRegression:
     
     def __init__(self,alpha = 0.1) -> None:
         self.coef_ = None
         self.intercept_ = None
+        if alpha < 0:
+            warnings.warn("The alpha passed was negative.Treating it as positive.",UserWarning)
+            alpha = abs(alpha)
         self.alpha = alpha
 
     def fit(self,X_train: np.ndarray, y_train: np.ndarray) -> None:

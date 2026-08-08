@@ -1,3 +1,5 @@
+import warnings
+
 import numpy as np
 
 class MultipleRidgeRegression:
@@ -8,7 +10,7 @@ class MultipleRidgeRegression:
     to training data and make predictions on new data. It calculates the
     coefficients and intercept using the closed-form solution (Normal Equation).
     """
-    def __init__(self,alpha = 0.1):
+    def __init__(self,alpha:float = 0.1):
         """
         Initializes the MultipleLinearRegression model.
 
@@ -17,6 +19,9 @@ class MultipleRidgeRegression:
             intercept_ (float): The learned intercept (bias) term.
             alpha: The regularisation term.
         """
+        if alpha < 0:
+            warnings.warn("The alpha passed was negative.Treating it as positive.",UserWarning)
+            alpha = abs(alpha)
         self.alpha = alpha
         self.coef_  = None
         self.intercept_ = None

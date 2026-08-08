@@ -1,4 +1,7 @@
+import warnings
+
 import numpy as np
+
 
 class RidgeRegressionGD:
     """
@@ -8,11 +11,20 @@ class RidgeRegressionGD:
     to training data and make predictions on new data. It calculates the
     coefficients and intercept using Gradient descent.
     """
-    def __init__(self,alpha = 0.1,learning_rate = 0.001,epochs = 500):
+    def __init__(self,alpha:float = 0.1,learning_rate:float = 0.001,epochs:int = 500):
         self.intercept_ = None
-        self.coef_ = None 
+        self.coef_ = None
+        if epochs <= 0:
+            warnings.warn("The epochs passed was negative or zero.Defaulting to 500.",UserWarning)
+            epochs = 500 
         self.epochs = epochs
+        if alpha < 0:
+            warnings.warn("The alpha passed was negative.Treating it as positive.",UserWarning)
+            alpha = abs(alpha)
         self.alpha = alpha
+        if learning_rate < 0:
+            warnings.warn("The learning passed was negative.Treating it as positive.",UserWarning)
+            learning_rate = abs(learning_rate)
         self.learning_rate = learning_rate
         
     def fit(self,X_train: np.ndarray, y_train:np.ndarray) -> None:
